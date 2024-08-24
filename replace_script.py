@@ -1,6 +1,6 @@
 import sys
 
-#Reading the configuration file and getting the replacements dictionary
+# Reading the configuration file and getting the replacements dictionary
 def read_conf(read_file):
     replace_dict = {}
     with open(read_file, 'r') as file:
@@ -10,7 +10,7 @@ def read_conf(read_file):
 
     return replace_dict
 
-#Processing and sorting lines of a text file
+# Processing and sorting lines of a text file
 def correction_lines(read_file, replacements):
     edited_lines = []
     with open(read_file, 'r') as file:
@@ -23,7 +23,7 @@ def correction_lines(read_file, replacements):
 
     return correct_lines
 
-#Replacing symbols in a line
+# Replacing symbols in a line
 def change_line(line, replacements):
     count_rep = 0
     replace_line = line.strip()
@@ -35,8 +35,14 @@ def change_line(line, replacements):
 
     return replace_line, count_rep
 
+# If you need to overwrite a file
+def overwrite_text_file(text_file, edited_lines):
+    with open(text_file, 'w') as file:
+        for line in edited_lines:
+            file.write(line + '\n')
+
 def main():
-    #Get command line args, check args count
+    # Get command line args, check args count
     if len(sys.argv) != 3:
         print("Error! Print: python replace_script.py 'configuration_file' 'text_file'")
         sys.exit(1)
@@ -44,18 +50,15 @@ def main():
     conf_file = sys.argv[1]
     text_file = sys.argv[2]
 
-    #Get replacements dictionary
+    # Get replacements dictionary
     replacements = read_conf(conf_file)
 
-    #Process lines of a text file
+    # Process lines of a text file
     edited_lines = correction_lines(text_file,replacements)
 
-    #Print result
-    with open(text_file, 'w') as file:
-        for line in edited_lines:
-            print(line)
-            file.write(line + '\n')
-
+    # Print result
+    for line in edited_lines:
+        print(line)
 
 if __name__ == "__main__":
     main()
